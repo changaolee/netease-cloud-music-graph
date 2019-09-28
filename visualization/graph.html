@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="https://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+<script type="text/javascript" src="https://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+<script type="text/javascript" src="https://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="https://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=w90yCCcXxf5IPmMIFxINcozP307KEECG&__ec_v__=20190126"></script>
+<script type="text/javascript" src="https://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script type="text/javascript" src="https://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom, 'dark');
+    option = null;
+    myChart.showLoading();
+    $.get('./data/graph_data.json', function (webkitDep) {
+
+        myChart.hideLoading();
+        option = {
+            legend: {
+                data: ['用户', '歌曲', '歌手']
+            },
+            series: [{
+                type: 'graph',
+                layout: 'force', // 使用力导图布局
+                animation: false,  // 是否开启动画
+                draggable: true,  // 节点是否可拖拽
+                roam: true,  // 是否开启鼠标缩放和平移漫游
+                focusNodeAdjacency: true,  // 是否在鼠标移到节点上的时候突出显示节点以及节点的边和邻接节点
+                edgeSymbol: ['circle', 'arrow'],  // 边两端的标记类型，可以是一个数组分别指定两端，也可以是单个统一指定
+                edgeSymbolSize: 5,  // 边两端的标记大小，可以是一个数组分别指定两端，也可以是单个统一指定
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'right',
+                        formatter: '{b}'
+                    }
+                },
+                data: webkitDep.nodes.map(function (node, idx) {
+                    node.id = idx;
+                    return node;
+                }),
+                categories: webkitDep.categories,
+                force: {
+                    edgeLength: [50, 100],  // 边的两个节点之间的距离
+                    repulsion: 20,  // 节点之间的斥力因子
+                    gravity: 0.02,  // 节点受到的向中心的引力因子，该值越大节点越往中心点靠拢
+                },
+                edges: webkitDep.links
+            }]
+        };
+
+        myChart.setOption(option);
+    });
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+</body>
+</html>
