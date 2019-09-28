@@ -9,7 +9,7 @@ from models.user.user import User
 
 
 class Spider(object):
-    CRAWL_PAGE_COUNT = 10  # 默认抓取前 10 条评论
+    CRAWL_PAGE_COUNT = 100  # 默认抓取前 100 条评论
     CRAWL_PAGE_SIZE = 20  # 每页评论的数量
 
     @classmethod
