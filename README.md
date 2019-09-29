@@ -54,4 +54,4 @@ $ cd scripts && python3 run_spider.py
 
 ## License
 
-[The MIT License (MIT)](https://github.com/Binaryify/NeteaseCloudMusicApi/blob/master/LICENSE)
+[The MIT License (MIT)](./LICENSE)
