@@ -6,7 +6,7 @@ certifi==2019.9.11
 cffi==1.12.3
 chardet==3.0.4
 constantly==15.1.0
-cryptography==2.7
+cryptography==3.2
 cssselect==1.1.0
 Faker==2.0.2
 gremlinpython==3.4.3
